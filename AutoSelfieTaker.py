@@ -88,9 +88,9 @@ def face_score(face):
     score -= (face.under_exposed_likelihood / 5) * Settings.Weight.ONE.value 
     score -= (face.blurred_likelihood / 5) * Settings.Weight.ONE.value
     score += (face.detection_confidence) * Settings.Weight.THREE.value
-    score -= (abs(face.roll_angle) / 90) * Settings.Weight.FOUR.value if face.roll_angle else 0 #Settings.Weight.FOUR.value 
-    score -= (abs(face.pan_angle) / 90) * Settings.Weight.FOUR.value if face.pan_angle else 0 #Settings.Weight.FOUR.value 
-    score -= (abs(face.tilt_angle) / 90) * Settings.Weight.FOUR.value if face.tilt_angle else 0 #Settings.Weight.FOUR.value 
+    score -= (abs(face.roll_angle) / 90) * Settings.Weight.FOUR.value if face.roll_angle else 0 
+    score -= (abs(face.pan_angle) / 90) * Settings.Weight.FOUR.value if face.pan_angle else 0 
+    score -= (abs(face.tilt_angle) / 90) * Settings.Weight.FOUR.value if face.tilt_angle else 0 
     return score
 
  
@@ -162,9 +162,9 @@ def main():
     queue = Queue()
     img_dict = dict()
  
-    # try: shutil.rmtree(Settings.save_path)
-    # except FileNotFoundError: pass
-    # finally: os.makedirs(Settings.save_path)
+    try: shutil.rmtree(Settings.save_path)
+    except FileNotFoundError: pass
+    finally: os.makedirs(Settings.save_path)
     
     captureImages_thread = threading.Thread(target=captureImages, args=(queue, 0, Settings.seconds_to_run))
     captureImages_thread.daemon = True
