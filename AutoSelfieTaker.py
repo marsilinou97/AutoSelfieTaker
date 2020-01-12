@@ -4,7 +4,6 @@ import urllib.request
 import threading
 from queue import Queue
 import time
-from threading import Lock
 from collections import OrderedDict
 import cv2
 import numpy as np
@@ -125,7 +124,8 @@ def threader(queue, img_dict):
             score = score_pic(faces)
             result = check_smile(faces)
             if result and score: img_dict[score] = image_content
-            with PRINT_LOCK: print(f'Score = {score},\tResult = {result}')
+            with PRINT_LOCK:
+                if score: print(f'Valid faces detected = {len(faces)},\tScore = {score},\tResult = {result}')
  
 
 def get_brightness(image):
@@ -162,9 +162,9 @@ def main():
     queue = Queue()
     img_dict = dict()
  
-    try: shutil.rmtree(Settings.save_path)
-    except FileNotFoundError: pass
-    finally: os.makedirs(Settings.save_path)
+    # try: shutil.rmtree(Settings.save_path)
+    # except FileNotFoundError: pass
+    # finally: os.makedirs(Settings.save_path)
     
     captureImages_thread = threading.Thread(target=captureImages, args=(queue, 0, Settings.seconds_to_run))
     captureImages_thread.daemon = True
@@ -204,7 +204,7 @@ def main():
 
 if __name__ == '__main__':
     global PRINT_LOCK, FPS, client, img_counter, start, BLUR_THRESHOLD
-    PRINT_LOCK = Lock()
+    PRINT_LOCK = threading.Lock()
     BLUR_THRESHOLD = Settings.blur_threshold
     FPS = Settings.frames_per_second
     CREDNTIALS = Settings.json_path
@@ -212,5 +212,4 @@ if __name__ == '__main__':
     client = vision.ImageAnnotatorClient.from_service_account_json(CREDNTIALS)
     img_counter = 0
     start = 0
-    exit()
     main()
