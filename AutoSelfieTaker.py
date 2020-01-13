@@ -45,7 +45,8 @@ def write_to_image(text, image, y_cordinate):
 
 def variance_of_laplacian(image):
     try:
-        return cv2.Laplacian(image, cv2.CV_64F).var()
+        variance = cv2.Laplacian(image, cv2.CV_64F).var()
+        return variance
     except Exception:
         print ('Error finding Laplacian variance')
  

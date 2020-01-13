@@ -19,15 +19,15 @@ class Weight(enum.Enum):
     FIVE = 5
 
 
-score_ranges = {'Good': range(int(5.2650 * 1000),int(6.2651 * 1000)), 'Average': range(int(5.2650 * 1000), int(3.665 * 1000)), 'Bad': range(int(3.665 * 1000))}
+score_ranges = {'Good': range(int(5.2650 * 1000),int(6.2651 * 1000)), 'Average': range(int(3.665 * 1000), int(5.2650 * 1000)), 'Bad': range(int(3.665 * 1000))}
 
 min_detection_confidence = 0.9
-blur_threshold = 250
+blur_threshold = 35
 frames_per_second = 1/20
-json_path = os.environ['GOOGLE_VISION_API_KEY']
+json_path = os.environ.get('GOOGLE_VISION_API_KEY')
 enhancment_median = 127.5
 sharpness_factor = 2
-ip_cam_url = "http://169.231.131.150:8080/shot.jpg"
+ip_cam_url = "http://192.168.0.23:8080/shot.jpg"
 weight = {'One': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5}
 max_pics_saved = 9
 seconds_to_run = 2
